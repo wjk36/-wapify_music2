@@ -2,6 +2,7 @@ var express = require( "express" );
 var request = require( "request" );
 var buffer = require( "buffer" );
 var cors = require("cors");
+var path=require('path');
 const fs      = require("fs");
 const jwt     = require("jsonwebtoken");
 var spotify_data = require( "./spotify.json" );
@@ -10,6 +11,7 @@ var ID ='test';
 var profileLink = 'testlink'
 var profilePic = 'testpic'
 var key = require('./dbkey.json');
+var query = require('./query.js');
 
 var app = express();
 
@@ -62,8 +64,10 @@ app.get("/loadProfile", function (req, res) {
         var data = JSON.parse(body);
         if (data.images[0]) {
             html += '<h2 id="logged_in_statement">User:</h2><img id="profile_image" src="' + data.images[0].url + '"/><h3 id="user_name">' + data.display_name + '</h3>'
+            query.updateUser(data.display_name, data.id, data.images[0].url);
         } else {
             html += '<h2 id="logged_in_statement">User:</h2><h4 id="profile_image"/>No Profile Picture Found</p><h4 id="user_name">' + data.display_name + '</h3>';
+            query.updateUser(data.display_name, data.id, 'NULL');
         }
         res.send(html);
         res.end();
