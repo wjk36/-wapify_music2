@@ -1,2 +1,2 @@
-# -wapify_music2
-cuz the first one is ducked
+# Swapify-Music
+A web application to convert Spotify playlists to Apple Music and vice versa
